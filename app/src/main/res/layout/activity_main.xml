@@ -54,5 +54,15 @@
         android:text="多选ListView 2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_multi_list1" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_multi_list1" />
+
+    <Button
+        android:id="@+id/btn_multi_list3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="多选ListView 3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_multi_list2" />
 </android.support.constraint.ConstraintLayout>

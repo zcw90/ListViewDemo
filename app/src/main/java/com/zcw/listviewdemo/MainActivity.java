@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_single_list2).setOnClickListener(listener);
         findViewById(R.id.btn_multi_list1).setOnClickListener(listener);
         findViewById(R.id.btn_multi_list2).setOnClickListener(listener);
+        findViewById(R.id.btn_multi_list3).setOnClickListener(listener);
     }
 
     private View.OnClickListener listener = new View.OnClickListener() {
@@ -45,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.btn_multi_list2:
                     startActivity(getIntent(MultiList2Activity.class));
+                    break;
+
+                case R.id.btn_multi_list3:
+                    startActivity(getIntent(MultiList3Activity.class));
                     break;
             }
         }

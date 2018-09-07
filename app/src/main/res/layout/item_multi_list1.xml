@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zcw.listviewdemo.view.SingleSelectLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zcw.listviewdemo.view.Multi1SelectLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,7 +7,7 @@
     tools:context=".SingleList2Activity">
 
     <TextView
-        android:id="@+id/tv_single_item_content2"
+        android:id="@+id/tv_multi_item_content1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -15,17 +15,19 @@
         android:padding="@dimen/dimen_10"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/img_single_item_content2"
+        app:layout_constraintEnd_toStartOf="@id/img_multi_item_content1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/img_single_item_content2"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:id="@+id/img_multi_item_content1"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:src="@mipmap/select_multi_no"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-</com.zcw.listviewdemo.view.SingleSelectLayout>
+</com.zcw.listviewdemo.view.Multi1SelectLayout>

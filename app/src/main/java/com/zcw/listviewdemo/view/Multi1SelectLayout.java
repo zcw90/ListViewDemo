@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Checkable;
 import android.widget.ImageView;
@@ -17,28 +16,26 @@ import com.zcw.listviewdemo.R;
  * Created by 朱城委 on 2018/8/31.<br><br>
  * 用于单选列表的布局
  */
-public class SingleSelectLayout extends ConstraintLayout implements Checkable {
-    private static final String TAG = SingleSelectLayout.class.getSimpleName();
+public class Multi1SelectLayout extends ConstraintLayout implements Checkable {
+    private static final String TAG = Multi1SelectLayout.class.getSimpleName();
 
     /** 是否被选中 */
     private boolean isChecked;
 
-    public SingleSelectLayout(Context context) {
+    public Multi1SelectLayout(Context context) {
         super(context);
     }
 
-    public SingleSelectLayout(Context context, AttributeSet attrs) {
+    public Multi1SelectLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public SingleSelectLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public Multi1SelectLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @Override
     public void setChecked(boolean checked) {
-        LogUtil.e(TAG, "setChecked: " + checked);
-
         if(isChecked != checked) {
             isChecked = checked;
             refreshDrawableState();
@@ -52,7 +49,6 @@ public class SingleSelectLayout extends ConstraintLayout implements Checkable {
 
     @Override
     public void toggle() {
-        LogUtil.e(TAG, "toggle");
         setChecked(!isChecked);
     }
 
@@ -61,7 +57,7 @@ public class SingleSelectLayout extends ConstraintLayout implements Checkable {
         super.refreshDrawableState();
         for(int i = 0; i < getChildCount(); i++) {
             View view = getChildAt(i);
-            if(view.getId() == R.id.tv_single_item_content2) {
+            if(view.getId() == R.id.tv_multi_item_content1) {
                 if(isChecked) {
                     ((TextView)view).setTextColor(ContextCompat.getColor(getContext(), R.color.text_select));
                 }
@@ -69,12 +65,12 @@ public class SingleSelectLayout extends ConstraintLayout implements Checkable {
                     ((TextView)view).setTextColor(ContextCompat.getColor(getContext(), R.color.text_normal));
                 }
             }
-            else if(view.getId() == R.id.img_single_item_content2) {
+            else if(view.getId() == R.id.img_multi_item_content1) {
                 if(isChecked) {
-                    ((ImageView)view).setImageResource(R.mipmap.select_single);
+                    ((ImageView)view).setImageResource(R.mipmap.select_multi);
                 }
                 else {
-                    ((ImageView)view).setImageResource(R.mipmap.select_single_no);
+                    ((ImageView)view).setImageResource(R.mipmap.select_multi_no);
                 }
             }
         }

@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MultiList1Activity">
 
     <LinearLayout
-        android:id="@+id/ll_title"
+        android:id="@+id/ll_multi_title2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -18,14 +18,14 @@
 
 
         <Button
-            android:id="@+id/btn_select_all"
+            android:id="@+id/btn_multi_select_all2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="全选" />
 
         <TextView
-            android:id="@+id/tv_select_count"
+            android:id="@+id/tv_multi_select_count2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -33,7 +33,7 @@
             android:text="已选" />
 
         <Button
-            android:id="@+id/btn_select_none"
+            android:id="@+id/btn_multi_select_none2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -41,7 +41,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_delete"
+        android:id="@+id/btn_multi_delete2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="删除"
@@ -51,11 +51,20 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ListView
-        android:id="@+id/lv_test"
+        android:id="@+id/lv_multi_test2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_delete"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_multi_delete2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_title" />
+        app:layout_constraintEnd_toStartOf="@id/tv_multi_select_result2"
+        app:layout_constraintTop_toBottomOf="@id/ll_multi_title2" />
+
+    <TextView
+        android:id="@+id/tv_multi_select_result2"
+        android:layout_width="80dp"
+        android:layout_height="0dp"
+        android:background="@color/button_normal"
+        app:layout_constraintBottom_toTopOf="@id/btn_multi_delete2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_multi_title2" />
 </android.support.constraint.ConstraintLayout>

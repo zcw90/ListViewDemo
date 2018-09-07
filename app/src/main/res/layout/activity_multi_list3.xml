@@ -4,51 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MultiList1Activity">
+    tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/ll_multi_title1"
+        android:id="@+id/ll_multi_title3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dimen_10"
         android:orientation="horizontal"
-        android:background="@color/bg_multi_select_title"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <TextView
-            android:id="@+id/tv_multi_select_cancel1"
+        <Button
+            android:id="@+id/btn_multi_select_all3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="@string/cancel"
-            android:textColor="@android:color/white" />
+            android:text="全选" />
 
         <TextView
-            android:id="@+id/tv_multi_select_count1"
+            android:id="@+id/tv_multi_select_count3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/select_count"
-            android:textColor="@android:color/white"/>
+            android:text="已选" />
 
-        <TextView
-            android:id="@+id/tv_multi_select_all_none1"
+        <Button
+            android:id="@+id/btn_multi_select_none3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center_vertical|right"
-            android:text="@string/select_all"
-            android:textColor="@android:color/white" />
+            android:text="全不选" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_multi_delete1"
+        android:id="@+id/btn_multi_delete3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="删除"
@@ -58,20 +51,20 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ListView
-        android:id="@+id/lv_multi_test1"
+        android:id="@+id/lv_multi_test3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/btn_multi_delete1"
+        app:layout_constraintBottom_toTopOf="@id/btn_multi_delete3"
+        app:layout_constraintEnd_toStartOf="@id/tv_multi_select_result3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/tv_multi_select_result1"
-        app:layout_constraintTop_toBottomOf="@id/ll_multi_title1" />
+        app:layout_constraintTop_toBottomOf="@id/ll_multi_title3" />
 
     <TextView
-        android:id="@+id/tv_multi_select_result1"
+        android:id="@+id/tv_multi_select_result3"
         android:layout_width="80dp"
         android:layout_height="0dp"
         android:background="@color/button_normal"
-        app:layout_constraintBottom_toTopOf="@id/btn_multi_delete1"
+        app:layout_constraintBottom_toTopOf="@id/btn_multi_delete3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_multi_title1" />
+        app:layout_constraintTop_toBottomOf="@id/ll_multi_title3" />
 </android.support.constraint.ConstraintLayout>

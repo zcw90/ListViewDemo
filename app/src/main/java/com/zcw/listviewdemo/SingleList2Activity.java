@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.zcw.base.CommonUtils;
+import com.zcw.listviewdemo.view.SingleSelectLayout;
 
 import java.util.ArrayList;
 import java.util.List;

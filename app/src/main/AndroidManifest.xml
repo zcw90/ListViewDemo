@@ -18,10 +18,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".NormalListActivity" />
-        <activity android:name=".MultiList2Activity" />
         <activity android:name=".SingleList1Activity" />
+        <activity android:name=".SingleList2Activity" />
         <activity android:name=".MultiList1Activity" />
-        <activity android:name=".SingleList2Activity"></activity>
+        <activity android:name=".MultiList2Activity" />
+        <activity android:name=".MultiList3Activity" />
     </application>
 
 </manifest>
