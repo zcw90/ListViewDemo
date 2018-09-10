@@ -18,9 +18,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <TextView
-            android:id="@+id/tv_multi_select_cancel1"
+            android:id="@+id/tv_multi_choice_cancel1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -29,29 +28,31 @@
             android:textColor="@android:color/white" />
 
         <TextView
-            android:id="@+id/tv_multi_select_count1"
+            android:id="@+id/tv_multi_choice_count1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"
             android:gravity="center"
-            android:text="@string/select_count"
+            android:text="@string/choice_count"
             android:textColor="@android:color/white"/>
 
         <TextView
-            android:id="@+id/tv_multi_select_all_none1"
+            android:id="@+id/tv_multi_choice_all_none1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical|right"
-            android:text="@string/select_all"
+            android:text="@string/choice_all"
             android:textColor="@android:color/white" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_multi_delete1"
+    <ImageView
+        android:id="@+id/img_multi_delete1"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="删除"
+        android:layout_height="40dp"
+        android:padding="@dimen/dimen_5"
+        android:src="@mipmap/delete"
+        android:background="@drawable/bg_delete"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,17 +62,18 @@
         android:id="@+id/lv_multi_test1"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/btn_multi_delete1"
+        app:layout_constraintBottom_toTopOf="@id/img_multi_delete1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/tv_multi_select_result1"
+        app:layout_constraintEnd_toStartOf="@id/tv_multi_choice_result1"
         app:layout_constraintTop_toBottomOf="@id/ll_multi_title1" />
 
     <TextView
-        android:id="@+id/tv_multi_select_result1"
+        android:id="@+id/tv_multi_choice_result1"
         android:layout_width="80dp"
         android:layout_height="0dp"
+        android:scrollbars="vertical"
         android:background="@color/button_normal"
-        app:layout_constraintBottom_toTopOf="@id/btn_multi_delete1"
+        app:layout_constraintBottom_toTopOf="@id/img_multi_delete1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ll_multi_title1" />
 </android.support.constraint.ConstraintLayout>
