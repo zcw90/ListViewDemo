@@ -5,6 +5,9 @@
     <string name="choice_count">已选(%d)</string>
     <string name="choice_all">全选</string>
     <string name="choice_none">全不选</string>
+    <string name="choice_all2">全选(%d)</string>
+    <string name="choice_none2">全不选(%d)</string>
 
+    <string name="choice_delete_item">请选择要删除的项</string>
     <string name="delete_hint">确定要删除这%d项？</string>
 </resources>

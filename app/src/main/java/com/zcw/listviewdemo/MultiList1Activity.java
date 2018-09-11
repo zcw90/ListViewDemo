@@ -129,7 +129,7 @@ public class MultiList1Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(listView.getCheckedItemCount() == 0) {
-                    CommonUtils.toast(MultiList1Activity.this, "请选择要删除的项");
+                    CommonUtils.toast(MultiList1Activity.this, R.string.choice_delete_item);
                     return ;
                 }
 

@@ -9,7 +9,7 @@ import com.zcw.base.LogUtil;
 
 /**
  * Created by 朱城委 on 2018/8/31.<br><br>
- * 用于单选列表的布局
+ * 用于多选列表的布局
  */
 public class Multi2SelectLayout extends ConstraintLayout implements Checkable {
     private static final String TAG = Multi2SelectLayout.class.getSimpleName();
