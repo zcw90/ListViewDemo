@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_multi_list1).setOnClickListener(listener);
         findViewById(R.id.btn_multi_list2).setOnClickListener(listener);
         findViewById(R.id.btn_multi_list3).setOnClickListener(listener);
+        findViewById(R.id.btn_slide_delete).setOnClickListener(listener);
     }
 
     private View.OnClickListener listener = new View.OnClickListener() {
@@ -50,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.btn_multi_list3:
                     startActivity(getIntent(MultiList3Activity.class));
+                    break;
+
+                case R.id.btn_slide_delete:
+                    startActivity(getIntent(SlideDeleteActivity.class));
                     break;
             }
         }

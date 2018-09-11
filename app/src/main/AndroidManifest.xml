@@ -25,6 +25,7 @@
         <activity android:name=".MultiList1Activity" />
         <activity android:name=".MultiList2Activity" />
         <activity android:name=".MultiList3Activity" />
+        <activity android:name=".SlideDeleteActivity"></activity>
     </application>
 
 </manifest>
