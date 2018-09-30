@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.zcw.base.CommonUtils;
 import com.zcw.listviewdemo.bean.SlideDeleteBean;
+import com.zcw.listviewdemo.view.SlideDeleteLayout;
 
 import java.util.ArrayList;
 import java.util.List;
