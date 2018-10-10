@@ -1,6 +1,7 @@
 package com.zcw.listviewdemo;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,6 +24,8 @@ public class SlideDeleteActivity extends AppCompatActivity {
     private ListView listView;
     private SlideDeleteAdapter adapter;
     private List<SlideDeleteBean> data;
+
+    private SlideDeleteLayout slideDeleteLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,15 @@ public class SlideDeleteActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 CommonUtils.toast(SlideDeleteActivity.this, "Long click " + data.get(position));
                 return true;
+            }
+        });
+
+        slideDeleteLayout = findViewById(R.id.subView_slide_delete);
+        slideDeleteLayout.setBackgroundColor(getResources().getColor(R.color.button_normal));
+        slideDeleteLayout.findViewById(R.id.tv_slide_delete_item_icon).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommonUtils.toast(SlideDeleteActivity.this, "zcw");
             }
         });
     }
