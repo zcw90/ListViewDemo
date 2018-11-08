@@ -1,7 +1,6 @@
 package com.zcw.listviewdemo;
 
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,8 +23,6 @@ public class SlideDeleteActivity extends AppCompatActivity {
     private SlideDeleteAdapter adapter;
     private List<SlideDeleteBean> data;
 
-    private ConstraintLayout slideDeleteLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +43,7 @@ public class SlideDeleteActivity extends AppCompatActivity {
         listView = findViewById(R.id.lv_slide_delete);
         adapter = new SlideDeleteAdapter(this, data);
         listView.setAdapter(adapter);
+        adapter.setListView(listView);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -61,39 +59,21 @@ public class SlideDeleteActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-        slideDeleteLayout = findViewById(R.id.subView_slide_delete);
-        slideDeleteLayout.setBackgroundColor(getResources().getColor(R.color.button_normal));
-        slideDeleteLayout.findViewById(R.id.tv_slide_delete_item_icon).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CommonUtils.toast(SlideDeleteActivity.this, "zcw");
-            }
-        });
-
-        slideDeleteLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CommonUtils.toast(SlideDeleteActivity.this, "zcw2222222");
-            }
-        });
-        slideDeleteLayout.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                CommonUtils.toast(SlideDeleteActivity.this, "zcw33333333");
-                return true;
-            }
-        });
     }
 
     private static class SlideDeleteAdapter extends BaseAdapter {
-
         private Context context;
         private List<SlideDeleteBean> data;
+
+        private SlideDeleteListView listView;
 
         public SlideDeleteAdapter(Context context, List<SlideDeleteBean> data) {
             this.context = context;
             this.data = data;
+        }
+
+        public void setListView(SlideDeleteListView listView) {
+            this.listView = listView;
         }
 
         @Override
@@ -112,7 +92,7 @@ public class SlideDeleteActivity extends AppCompatActivity {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
             View view = convertView;
 
@@ -122,6 +102,7 @@ public class SlideDeleteActivity extends AppCompatActivity {
 
                 holder.tvTitle = view.findViewById(R.id.tv_slide_delete_item_title);
                 holder.tvContent = view.findViewById(R.id.tv_slide_delete_item_content);
+                holder.tvSlideMenu = view.findViewById(R.id.tv_slide_delete_item_icon);
                 view.setTag(holder);
             }
             else {
@@ -130,12 +111,27 @@ public class SlideDeleteActivity extends AppCompatActivity {
 
             holder.tvTitle.setText(data.get(position).getTitle());
             holder.tvContent.setText(data.get(position).getContent());
+            holder.tvSlideMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CommonUtils.toast(context, "Delete");
+                    data.remove(position);
+                    notifyDataSetChanged();
+
+                    if(listView != null) {
+                        listView.smoothCloseSlideMenu();
+                    }
+                }
+            });
+
             return view;
         }
 
         private static class ViewHolder {
             public TextView tvTitle;
             public TextView tvContent;
+
+            public TextView tvSlideMenu;
         }
     }
 }

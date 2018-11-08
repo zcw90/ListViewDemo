@@ -6,23 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".SlideDeleteActivity">
 
-    <include
-        android:id="@+id/subView_slide_delete"
-        layout="@layout/item_slide_delete"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
     <com.zcw.listviewdemo.view.SlideDeleteListView
         android:id="@+id/lv_slide_delete"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subView_slide_delete" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

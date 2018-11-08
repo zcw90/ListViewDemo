@@ -19,6 +19,12 @@ import com.zcw.listviewdemo.util.DisplayUtil;
  */
 public class SlideDeleteListView extends ListView {
 
+    /** 速率常量 */
+    private static final int VELOCITY = 50;
+
+    /** 侧滑菜单划出所需时间 */
+    private static final int SLIDE_TIME = 300;
+
     private int downX;
     private int downY;
     private int lastX;
@@ -68,7 +74,6 @@ public class SlideDeleteListView extends ListView {
         slideMenuWidth = DisplayUtil.dip2px(getContext(), -60);
         slidePosition = AdapterView.INVALID_POSITION;
         slidePositionOpen = slidePosition;
-
         slideViewItemOpen = null;
     }
 
@@ -120,8 +125,9 @@ public class SlideDeleteListView extends ListView {
                     break;
 
                 case MotionEvent.ACTION_MOVE:
-                    // 取消此次事件序列中已经传递给父类的事件
                     cancelSuperHandleMotionEvent(ev);
+
+                    // 在侧滑菜单弹出的情况下，滑动其他任何地方，都关闭侧滑菜单
                     int positionTemp = pointToPosition((int) ev.getX(), (int) ev.getY());
                     if(slideViewItemOpen != null && slidePosition != positionTemp) {
                         smoothCloseSlideMenu();
@@ -137,13 +143,14 @@ public class SlideDeleteListView extends ListView {
 
                 case MotionEvent.ACTION_UP:
                     isSlide = false;
-                    velocityTracker.computeCurrentVelocity(300);
+                    velocityTracker.computeCurrentVelocity(SLIDE_TIME);
                     float velocityX = velocityTracker.getXVelocity();
 
-                    if (velocityX > 50) {
+                    // 根据滑动速度和侧滑菜单显示的宽度，判断是打开还是关闭侧滑菜单
+                    if (velocityX > VELOCITY) {
                         smoothOpenSlideMenu();
                     }
-                    else if(velocityX >= 0 && velocityX <=50) {
+                    else if(velocityX >= 0 && velocityX <= VELOCITY) {
                         if(Math.abs(slideViewItem.getScrollX()) >= Math.abs(slideMenuWidth / 2)) {
                             smoothOpenSlideMenu();
                         }
@@ -151,7 +158,7 @@ public class SlideDeleteListView extends ListView {
                             smoothCloseSlideMenu();
                         }
                     }
-                    else if(velocityX < 0 && velocityX >= -50) {
+                    else if(velocityX < 0 && velocityX >= -VELOCITY) {
                         if(Math.abs(slideViewItem.getScrollX()) <= Math.abs(slideMenuWidth  * 2 / 3)) {
                             smoothCloseSlideMenu();
                         }
@@ -159,7 +166,7 @@ public class SlideDeleteListView extends ListView {
                             smoothOpenSlideMenu();
                         }
                     }
-                    else if (velocityX < -50) {
+                    else if (velocityX < -VELOCITY) {
                         smoothCloseSlideMenu();
                     }
 
@@ -173,6 +180,7 @@ public class SlideDeleteListView extends ListView {
         else if(slidePositionOpen != AdapterView.INVALID_POSITION) {
             cancelSuperHandleMotionEvent(ev);
 
+            // 在侧滑菜单弹出的情况下，点击任何地方，都关闭侧滑菜单
             switch (ev.getAction()) {
                 case MotionEvent.ACTION_UP:
                     smoothCloseSlideMenu();
@@ -227,7 +235,7 @@ public class SlideDeleteListView extends ListView {
      * 平滑打开滑动菜单
      */
     private void smoothOpenSlideMenu() {
-        smoothScrollTo(slideMenuWidth, 0, 300);
+        smoothScrollTo(slideMenuWidth, 0, SLIDE_TIME);
         slidePositionOpen = slidePosition;
         slideViewItemOpen = slideViewItem;
     }
@@ -235,8 +243,8 @@ public class SlideDeleteListView extends ListView {
     /**
      * 平滑关闭滑动菜单
      */
-    private void smoothCloseSlideMenu() {
-        smoothScrollTo(0, 0, 300);
+    public void smoothCloseSlideMenu() {
+        smoothScrollTo(0, 0, SLIDE_TIME);
         slidePosition = AdapterView.INVALID_POSITION;
         slidePositionOpen = slidePosition;
 
