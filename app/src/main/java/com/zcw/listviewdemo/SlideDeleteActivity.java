@@ -1,7 +1,7 @@
 package com.zcw.listviewdemo;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,23 +9,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.zcw.base.CommonUtils;
 import com.zcw.listviewdemo.bean.SlideDeleteBean;
-import com.zcw.listviewdemo.view.SlideDeleteLayout;
+import com.zcw.listviewdemo.view.SlideDeleteListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SlideDeleteActivity extends AppCompatActivity {
 
-    private ListView listView;
+    private SlideDeleteListView listView;
     private SlideDeleteAdapter adapter;
     private List<SlideDeleteBean> data;
 
-    private SlideDeleteLayout slideDeleteLayout;
+    private ConstraintLayout slideDeleteLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +68,20 @@ public class SlideDeleteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 CommonUtils.toast(SlideDeleteActivity.this, "zcw");
+            }
+        });
+
+        slideDeleteLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommonUtils.toast(SlideDeleteActivity.this, "zcw2222222");
+            }
+        });
+        slideDeleteLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                CommonUtils.toast(SlideDeleteActivity.this, "zcw33333333");
+                return true;
             }
         });
     }

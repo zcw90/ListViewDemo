@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zcw.listviewdemo.view.SlideDeleteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -39,4 +39,4 @@
         app:layout_constraintBottom_toBottomOf="@+id/tv_slide_delete_item_content"
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_slide_delete_item_title" />
-</com.zcw.listviewdemo.view.SlideDeleteLayout>
+</android.support.constraint.ConstraintLayout>
