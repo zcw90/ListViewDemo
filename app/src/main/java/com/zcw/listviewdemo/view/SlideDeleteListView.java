@@ -1,17 +1,24 @@
 package com.zcw.listviewdemo.view;
 
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Scroller;
+import android.widget.TextView;
 
-import com.zcw.base.LogUtil;
 import com.zcw.listviewdemo.util.DisplayUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 朱城委 on 2018/9/21.<br><br>
@@ -51,6 +58,10 @@ public class SlideDeleteListView extends ListView {
 
     /** 滑动菜单的宽度 */
     private int slideMenuWidth;
+
+    private List<SlideMenuItem> slideMenuItems;
+
+    private OnSlideMenuItemClickListener slideMenuItemClickListener;
 
     public SlideDeleteListView(Context context) {
         super(context);
@@ -231,6 +242,39 @@ public class SlideDeleteListView extends ListView {
         super.onDetachedFromWindow();
     }
 
+    @Override
+    public void setAdapter(final ListAdapter adapter) {
+        final BaseAdapter baseAdapter = new BaseAdapter() {
+            @Override
+            public int getCount() {
+                return adapter.getCount();
+            }
+
+            @Override
+            public Object getItem(int position) {
+                return adapter.getItem(position);
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return adapter.getItemId(position);
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = adapter.getView(position, convertView, parent);
+                ConstraintLayout layout = new ConstraintLayout(getContext());
+                ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(view.getWidth(), view.getHeight());
+                layout.setLayoutParams(layoutParams);
+
+                return layout;
+            }
+        };
+
+        super.setAdapter(adapter);
+//        super.setAdapter(baseAdapter);
+    }
+
     /**
      * 平滑打开滑动菜单
      */
@@ -249,5 +293,27 @@ public class SlideDeleteListView extends ListView {
         slidePositionOpen = slidePosition;
 
         slideViewItemOpen = null;
+    }
+
+    public void setSlideMenu(List<SlideMenuItem> slideMenuItems, OnSlideMenuItemClickListener listener) {
+        this.slideMenuItems = slideMenuItems;
+        this.slideMenuItemClickListener = listener;
+    }
+
+    private List<TextView> setSlideMenuView(List<SlideMenuItem> slideMenuItems) {
+        List<TextView> views = new ArrayList<>();
+
+        for(int i = 0; i < slideMenuItems.size() && i < 3; i++) {
+            TextView textView = new TextView(getContext());
+            textView.setText(slideMenuItems.get(i).getContent());
+            textView.setBackgroundColor(slideMenuItems.get(i).getBgColor());
+
+            views.add(textView);
+        }
+        return views;
+    }
+
+    public interface OnSlideMenuItemClickListener {
+        void slideMenuItemClick(int position, SlideMenuItem menuItem, int index);
     }
 }
