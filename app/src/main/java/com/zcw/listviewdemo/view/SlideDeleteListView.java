@@ -152,7 +152,7 @@ public class SlideDeleteListView extends ListView {
 
                     int deltaX = lastX - x;
                     int scrollX = slideViewItem.getScrollX() + deltaX;
-                    if(Math.abs(scrollX) <= Math.abs(slideMenuWidth) && scrollX <= 0) {
+                    if(Math.abs(scrollX) <= Math.abs(slideMenuWidth) && scrollX >= 0) {
                         slideViewItem.scrollBy(deltaX, 0);
                     }
                     break;
@@ -164,26 +164,32 @@ public class SlideDeleteListView extends ListView {
 
                     // 根据滑动速度和侧滑菜单显示的宽度，判断是打开还是关闭侧滑菜单
                     if (velocityX > VELOCITY) {
-                        smoothOpenSlideMenu();
+//                        smoothOpenSlideMenu();
+                        smoothCloseSlideMenu();
                     }
                     else if(velocityX >= 0 && velocityX <= VELOCITY) {
                         if(Math.abs(slideViewItem.getScrollX()) >= Math.abs(slideMenuWidth / 2)) {
-                            smoothOpenSlideMenu();
+//                            smoothOpenSlideMenu();
+                            smoothCloseSlideMenu();
                         }
                         else {
-                            smoothCloseSlideMenu();
+//                            smoothCloseSlideMenu();
+                            smoothOpenSlideMenu();
                         }
                     }
                     else if(velocityX < 0 && velocityX >= -VELOCITY) {
                         if(Math.abs(slideViewItem.getScrollX()) <= Math.abs(slideMenuWidth  * 2 / 3)) {
-                            smoothCloseSlideMenu();
+//                            smoothCloseSlideMenu();
+                            smoothOpenSlideMenu();
                         }
                         else {
-                            smoothOpenSlideMenu();
+//                            smoothOpenSlideMenu();
+                            smoothCloseSlideMenu();
                         }
                     }
                     else if (velocityX < -VELOCITY) {
-                        smoothCloseSlideMenu();
+//                        smoothCloseSlideMenu();
+                        smoothOpenSlideMenu();
                     }
 
                     velocityTracker.clear();
@@ -326,7 +332,7 @@ public class SlideDeleteListView extends ListView {
      * 平滑打开滑动菜单
      */
     private void smoothOpenSlideMenu() {
-        smoothScrollTo(slideMenuWidth, 0, SLIDE_TIME);
+        smoothScrollTo(-slideMenuWidth, 0, SLIDE_TIME);
         slidePositionOpen = slidePosition;
         slideViewItemOpen = slideViewItem;
     }

@@ -58,7 +58,7 @@ public class SlideLayout extends ConstraintLayout {
 
         ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
                 DisplayUtil.dip2px(getContext(), 60), 0);
-        params.rightToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+        params.leftToRight = ConstraintLayout.LayoutParams.PARENT_ID;
         params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
         params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
         slideMenuView.setLayoutParams(params);
