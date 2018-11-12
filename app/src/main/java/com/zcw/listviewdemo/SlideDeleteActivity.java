@@ -65,7 +65,8 @@ public class SlideDeleteActivity extends AppCompatActivity {
         listView.setSlideMenu(slideMenuItems, new SlideDeleteListView.OnSlideMenuItemClickListener() {
             @Override
             public void slideMenuItemClick(int position, SlideMenuItem menuItem, int index) {
-
+                data.remove(position);
+                adapter.notifyDataSetChanged();
             }
         });
     }

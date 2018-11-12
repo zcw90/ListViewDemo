@@ -1,6 +1,7 @@
 package com.zcw.listviewdemo.view;
 
 import android.content.Context;
+import android.database.DataSetObserver;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -16,6 +17,7 @@ import android.widget.ListView;
 import android.widget.Scroller;
 import android.widget.TextView;
 
+import com.zcw.listviewdemo.R;
 import com.zcw.listviewdemo.util.DisplayUtil;
 
 import java.util.ArrayList;
@@ -62,9 +64,9 @@ public class SlideDeleteListView extends ListView {
 
     private List<SlideMenuItem> slideMenuItems;
 
-    private OnSlideMenuItemClickListener slideMenuItemClickListener;
+    private List<TextView> slideMenuView;
 
-    private View contentView;
+    private OnSlideMenuItemClickListener slideMenuItemClickListener;
 
     public SlideDeleteListView(Context context) {
         super(context);
@@ -264,35 +266,57 @@ public class SlideDeleteListView extends ListView {
             }
 
             @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                ConstraintLayout layout;
+            public View getView(final int position, View convertView, ViewGroup parent) {
+                SlideLayout layout;
 
                 if(convertView == null) {
-                    contentView = adapter.getView(position, convertView, parent);
-                    layout = new ConstraintLayout(getContext());
+                    View contentView = adapter.getView(position, convertView, parent);
+                    layout = new SlideLayout(getContext());
                     layout.addView(contentView);
+                    layout.setContentView(contentView);
+                    layout.setSlideMenuItem(slideMenuItems.get(0));
 
-                    List<TextView> textViews = setSlideMenuView(slideMenuItems);
-                    TextView tempTextView;
-                    for(int i = 0; i < textViews.size(); i++) {
-                        tempTextView = textViews.get(i);
-                        tempTextView.setText(slideMenuItems.get(i).getContent());
-                        tempTextView.setBackgroundResource(slideMenuItems.get(i).getBgColorResId());
-                        tempTextView.setGravity(Gravity.CENTER);
-
-                        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(Math.abs(slideMenuWidth), 0);
-                        params.rightToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
-                        params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
-                        params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
-                        tempTextView.setLayoutParams(params);
-                        layout.addView(tempTextView);
-                    }
+//                    TextView tempTextView;
+//                    for(int i = 0; i < slideMenuView.size(); i++) {
+//                        tempTextView = slideMenuView.get(i);
+//                        tempTextView.setText(slideMenuItems.get(i).getContent());
+//                        tempTextView.setTextColor(getContext().getResources().getColor(R.color.white));
+//                        tempTextView.setBackgroundResource(slideMenuItems.get(i).getBgColorResId());
+//                        tempTextView.setGravity(Gravity.CENTER);
+//
+//                        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(Math.abs(slideMenuWidth), 0);
+//                        params.rightToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+//                        params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+//                        params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
+//                        tempTextView.setLayoutParams(params);
+//                        layout.addView(tempTextView);
+//                    }
                 }
                 else {
-                    layout = (ConstraintLayout)convertView;
-                    adapter.getView(position, contentView, parent);
+                    layout = (SlideLayout) convertView;
+                    adapter.getView(position, layout.getContentView(), parent);
                 }
+
+                layout.getSlideMenuView().setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        smoothCloseSlideMenu();
+                        if(slideMenuItemClickListener != null) {
+                            slideMenuItemClickListener.slideMenuItemClick(position, slideMenuItems.get(0), 0);
+                        }
+                    }
+                });
                 return layout;
+            }
+
+            @Override
+            public void registerDataSetObserver(DataSetObserver observer) {
+                adapter.registerDataSetObserver(observer);
+            }
+
+            @Override
+            public void unregisterDataSetObserver(DataSetObserver observer) {
+                adapter.unregisterDataSetObserver(observer);
             }
         };
         super.setAdapter(baseAdapter);
@@ -323,21 +347,20 @@ public class SlideDeleteListView extends ListView {
         this.slideMenuItemClickListener = listener;
     }
 
-    private List<TextView> setSlideMenuView(List<SlideMenuItem> slideMenuItems) {
-        List<TextView> views = new ArrayList<>();
-        if(slideMenuItems == null || slideMenuItems.size() == 0) {
-            return views;
-        }
-
-        for(int i = 0; i < slideMenuItems.size() && i < 3; i++) {
-            TextView textView = new TextView(getContext());
-            textView.setText(slideMenuItems.get(i).getContent());
-            textView.setBackgroundColor(slideMenuItems.get(i).getBgColorResId());
-
-            views.add(textView);
-        }
-        return views;
-    }
+//    private void setSlideMenuView(List<SlideMenuItem> slideMenuItems) {
+//        slideMenuView = new ArrayList<>();
+//        if(slideMenuItems == null || slideMenuItems.size() == 0) {
+//            return ;
+//        }
+//        for(int i = 0; i < slideMenuItems.size() && i < 3; i++) {
+//            TextView textView = new TextView(getContext());
+//            textView.setText(slideMenuItems.get(i).getContent());
+//            textView.setBackgroundColor(slideMenuItems.get(i).getBgColorResId());
+//
+//            slideMenuView.add(textView);
+//        }
+//        return ;
+//    }
 
     public interface OnSlideMenuItemClickListener {
         void slideMenuItemClick(int position, SlideMenuItem menuItem, int index);

@@ -11,6 +11,8 @@ public class SlideMenuItem {
     /** 滑动菜单背景颜色 */
     private int bgColorResId;
 
+    private int menuWidth;
+
     public SlideMenuItem() {
     }
 
@@ -33,5 +35,13 @@ public class SlideMenuItem {
 
     public void setBgColorResId(int bgColorResId) {
         this.bgColorResId = bgColorResId;
+    }
+
+    public int getMenuWidth() {
+        return menuWidth;
+    }
+
+    public void setMenuWidth(int menuWidth) {
+        this.menuWidth = menuWidth;
     }
 }
