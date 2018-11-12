@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.zcw.listviewdemo.util.DisplayUtil;
+
 public class DemoActivity extends AppCompatActivity {
 
     private ConstraintLayout contentView;
@@ -24,8 +26,13 @@ public class DemoActivity extends AppCompatActivity {
         contentView = (ConstraintLayout) ((ViewGroup)findViewById(android.R.id.content)).getChildAt(0);
         TextView textView = new TextView(this);
         textView.setText("ZZZZ");
-        textView.setBackgroundColor(Color.BLUE);
-
+//        textView.setBackgroundColor(Color.BLUE);
+        textView.setBackgroundResource(R.color.button_normal);
         contentView.addView(textView);
+
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) textView.getLayoutParams();
+        params.width = DisplayUtil.getScreenMetrics(this).widthPixels;
+        params.height = textView.getHeight();
+        textView.setLayoutParams(params);
     }
 }

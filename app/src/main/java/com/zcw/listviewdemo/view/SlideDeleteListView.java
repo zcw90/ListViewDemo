@@ -3,6 +3,7 @@ package com.zcw.listviewdemo.view;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -62,6 +63,8 @@ public class SlideDeleteListView extends ListView {
     private List<SlideMenuItem> slideMenuItems;
 
     private OnSlideMenuItemClickListener slideMenuItemClickListener;
+
+    private View contentView;
 
     public SlideDeleteListView(Context context) {
         super(context);
@@ -262,17 +265,37 @@ public class SlideDeleteListView extends ListView {
 
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                View view = adapter.getView(position, convertView, parent);
-                ConstraintLayout layout = new ConstraintLayout(getContext());
-                ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(view.getWidth(), view.getHeight());
-                layout.setLayoutParams(layoutParams);
+                ConstraintLayout layout;
 
+                if(convertView == null) {
+                    contentView = adapter.getView(position, convertView, parent);
+                    layout = new ConstraintLayout(getContext());
+                    layout.addView(contentView);
+
+                    List<TextView> textViews = setSlideMenuView(slideMenuItems);
+                    TextView tempTextView;
+                    for(int i = 0; i < textViews.size(); i++) {
+                        tempTextView = textViews.get(i);
+                        tempTextView.setText(slideMenuItems.get(i).getContent());
+                        tempTextView.setBackgroundResource(slideMenuItems.get(i).getBgColorResId());
+                        tempTextView.setGravity(Gravity.CENTER);
+
+                        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(Math.abs(slideMenuWidth), 0);
+                        params.rightToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+                        params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+                        params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
+                        tempTextView.setLayoutParams(params);
+                        layout.addView(tempTextView);
+                    }
+                }
+                else {
+                    layout = (ConstraintLayout)convertView;
+                    adapter.getView(position, contentView, parent);
+                }
                 return layout;
             }
         };
-
-        super.setAdapter(adapter);
-//        super.setAdapter(baseAdapter);
+        super.setAdapter(baseAdapter);
     }
 
     /**
@@ -302,11 +325,14 @@ public class SlideDeleteListView extends ListView {
 
     private List<TextView> setSlideMenuView(List<SlideMenuItem> slideMenuItems) {
         List<TextView> views = new ArrayList<>();
+        if(slideMenuItems == null || slideMenuItems.size() == 0) {
+            return views;
+        }
 
         for(int i = 0; i < slideMenuItems.size() && i < 3; i++) {
             TextView textView = new TextView(getContext());
             textView.setText(slideMenuItems.get(i).getContent());
-            textView.setBackgroundColor(slideMenuItems.get(i).getBgColor());
+            textView.setBackgroundColor(slideMenuItems.get(i).getBgColorResId());
 
             views.add(textView);
         }

@@ -9,7 +9,15 @@ public class SlideMenuItem {
     private String content;
 
     /** 滑动菜单背景颜色 */
-    private int bgColor;
+    private int bgColorResId;
+
+    public SlideMenuItem() {
+    }
+
+    public SlideMenuItem(String content, int bgColorResId) {
+        this.content = content;
+        this.bgColorResId = bgColorResId;
+    }
 
     public String getContent() {
         return content;
@@ -19,11 +27,11 @@ public class SlideMenuItem {
         this.content = content;
     }
 
-    public int getBgColor() {
-        return bgColor;
+    public int getBgColorResId() {
+        return bgColorResId;
     }
 
-    public void setBgColor(int bgColor) {
-        this.bgColor = bgColor;
+    public void setBgColorResId(int bgColorResId) {
+        this.bgColorResId = bgColorResId;
     }
 }

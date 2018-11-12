@@ -1,6 +1,8 @@
 package com.zcw.listviewdemo.util;
 
 import android.content.Context;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
 
 public class DisplayUtil {
 
@@ -42,5 +44,12 @@ public class DisplayUtil {
 	public static int sp2px(Context context, float spValue) {
 		final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
 		return (int) (spValue * fontScale + 0.5f);
+	}
+
+	public static DisplayMetrics getScreenMetrics(Context context) {
+		WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+		DisplayMetrics metrics = new DisplayMetrics();
+		manager.getDefaultDisplay().getMetrics(metrics);
+		return metrics;
 	}
 }
