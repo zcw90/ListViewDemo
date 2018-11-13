@@ -107,6 +107,9 @@ public class SlideDeleteListView extends ListView {
                 }
 
                 // 获取点击的view
+                if(slideViewItem != null && slideViewItem.getScrollX() != 0) {
+                    slideViewItem.scrollTo(0, 0);
+                }
                 slideViewItem = getChildAt(slidePosition - getFirstVisiblePosition());
                 break;
 
