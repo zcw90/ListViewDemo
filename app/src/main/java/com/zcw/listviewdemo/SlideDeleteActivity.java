@@ -62,13 +62,20 @@ public class SlideDeleteActivity extends AppCompatActivity {
 
         List<SlideMenuItem> slideMenuItems = new ArrayList<>();
         slideMenuItems.add(new SlideMenuItem("删除", R.color.button_normal));
+        slideMenuItems.add(new SlideMenuItem("菜单2", R.color.bg_multi_select_title));
         listView.setSlideMenu(slideMenuItems, new SlideDeleteListView.OnSlideMenuItemClickListener() {
             @Override
             public void slideMenuItemClick(int position, SlideMenuItem menuItem, int index) {
-                data.remove(position);
-                adapter.notifyDataSetChanged();
+                if(index == 0) {
+                    data.remove(position);
+                    adapter.notifyDataSetChanged();
+                }
+                else if(index == 1) {
+                    CommonUtils.toast(SlideDeleteActivity.this, "侧滑菜单2");
+                }
             }
         });
+        listView.setSlideMenuWidth(0);
     }
 
     private static class SlideDeleteAdapter extends BaseAdapter {

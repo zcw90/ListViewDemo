@@ -2,9 +2,7 @@ package com.zcw.listviewdemo.view;
 
 import android.content.Context;
 import android.database.DataSetObserver;
-import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -15,12 +13,10 @@ import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Scroller;
-import android.widget.TextView;
 
-import com.zcw.listviewdemo.R;
+import com.zcw.listviewdemo.util.Constant;
 import com.zcw.listviewdemo.util.DisplayUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -64,8 +60,6 @@ public class SlideDeleteListView extends ListView {
 
     private List<SlideMenuItem> slideMenuItems;
 
-    private List<TextView> slideMenuView;
-
     private OnSlideMenuItemClickListener slideMenuItemClickListener;
 
     public SlideDeleteListView(Context context) {
@@ -87,7 +81,7 @@ public class SlideDeleteListView extends ListView {
         touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         scroller = new Scroller(context);
         velocityTracker = VelocityTracker.obtain();
-        slideMenuWidth = DisplayUtil.dip2px(getContext(), -60);
+        slideMenuWidth = DisplayUtil.dip2px(getContext(), Constant.SLIDE_MENU_WIDTH);
         slidePosition = AdapterView.INVALID_POSITION;
         slidePositionOpen = slidePosition;
         slideViewItemOpen = null;
@@ -280,38 +274,27 @@ public class SlideDeleteListView extends ListView {
                     layout = new SlideLayout(getContext());
                     layout.addView(contentView);
                     layout.setContentView(contentView);
-                    layout.setSlideMenuItem(slideMenuItems.get(0));
-
-//                    TextView tempTextView;
-//                    for(int i = 0; i < slideMenuView.size(); i++) {
-//                        tempTextView = slideMenuView.get(i);
-//                        tempTextView.setText(slideMenuItems.get(i).getContent());
-//                        tempTextView.setTextColor(getContext().getResources().getColor(R.color.white));
-//                        tempTextView.setBackgroundResource(slideMenuItems.get(i).getBgColorResId());
-//                        tempTextView.setGravity(Gravity.CENTER);
-//
-//                        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(Math.abs(slideMenuWidth), 0);
-//                        params.rightToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
-//                        params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
-//                        params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
-//                        tempTextView.setLayoutParams(params);
-//                        layout.addView(tempTextView);
-//                    }
+                    layout.setSlideMenuItems(slideMenuItems);
                 }
                 else {
                     layout = (SlideLayout) convertView;
                     adapter.getView(position, layout.getContentView(), parent);
                 }
 
-                layout.getSlideMenuView().setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        smoothCloseSlideMenu();
-                        if(slideMenuItemClickListener != null) {
-                            slideMenuItemClickListener.slideMenuItemClick(position, slideMenuItems.get(0), 0);
-                        }
+                if(layout.getSlideMenuViews() != null && layout.getSlideMenuViews().size() > 0) {
+                    for(int i = 0; i < layout.getSlideMenuViews().size(); i++) {
+                        final int index = i;
+                        layout.getSlideMenuViews().get(i).setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                quickCloseSlideMenu();
+                                if(slideMenuItemClickListener != null) {
+                                    slideMenuItemClickListener.slideMenuItemClick(position, slideMenuItems.get(index), index);
+                                }
+                            }
+                        });
                     }
-                });
+                }
                 return layout;
             }
 
@@ -332,7 +315,7 @@ public class SlideDeleteListView extends ListView {
      * 平滑打开滑动菜单
      */
     private void smoothOpenSlideMenu() {
-        smoothScrollTo(-slideMenuWidth, 0, SLIDE_TIME);
+        smoothScrollTo(slideMenuWidth, 0, SLIDE_TIME);
         slidePositionOpen = slidePosition;
         slideViewItemOpen = slideViewItem;
     }
@@ -348,25 +331,56 @@ public class SlideDeleteListView extends ListView {
         slideViewItemOpen = null;
     }
 
+    /**
+     * 快速关闭滑动菜单
+     */
+    private void quickCloseSlideMenu() {
+        slideViewItem.scrollTo(0, 0);
+        slidePosition = AdapterView.INVALID_POSITION;
+        slidePositionOpen = slidePosition;
+
+        slideViewItemOpen = null;
+    }
+
     public void setSlideMenu(List<SlideMenuItem> slideMenuItems, OnSlideMenuItemClickListener listener) {
         this.slideMenuItems = slideMenuItems;
         this.slideMenuItemClickListener = listener;
+
+        setSlideMenuWidth();
     }
 
-//    private void setSlideMenuView(List<SlideMenuItem> slideMenuItems) {
-//        slideMenuView = new ArrayList<>();
-//        if(slideMenuItems == null || slideMenuItems.size() == 0) {
-//            return ;
-//        }
-//        for(int i = 0; i < slideMenuItems.size() && i < 3; i++) {
-//            TextView textView = new TextView(getContext());
-//            textView.setText(slideMenuItems.get(i).getContent());
-//            textView.setBackgroundColor(slideMenuItems.get(i).getBgColorResId());
-//
-//            slideMenuView.add(textView);
-//        }
-//        return ;
-//    }
+    public int getSlideMenuWidth() {
+        return slideMenuWidth;
+    }
+
+    /**
+     * 设置滑动菜单的宽度(单位：dp)
+     * @param slideMenuWidth
+     */
+    public void setSlideMenuWidth(int slideMenuWidth) {
+        if(slideMenuWidth < Constant.SLIDE_MENU_WIDTH) {
+            slideMenuWidth = Constant.SLIDE_MENU_WIDTH;
+        }
+        else if(slideMenuWidth > Constant.SLIDE_MENU_WIDTH_MAX) {
+            slideMenuWidth = Constant.SLIDE_MENU_WIDTH_MAX;
+        }
+
+        this.slideMenuWidth = DisplayUtil.dip2px(getContext(), slideMenuWidth);
+        setSlideMenuWidth();
+    }
+
+    /**
+     * 设置滑动菜单的宽度
+     */
+    private void setSlideMenuWidth() {
+        if(slideMenuItems != null && slideMenuItems.size() > 0) {
+            for(int i = 0; i < slideMenuItems.size(); i++) {
+                slideMenuItems.get(i).setMenuWidth(Math.abs(slideMenuWidth));
+            }
+
+            slideMenuWidth = slideMenuWidth * slideMenuItems.size();
+        }
+    }
 
     public interface OnSlideMenuItemClickListener {
         void slideMenuItemClick(int position, SlideMenuItem menuItem, int index);

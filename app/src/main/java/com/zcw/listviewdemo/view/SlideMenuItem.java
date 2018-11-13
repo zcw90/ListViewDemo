@@ -1,5 +1,7 @@
 package com.zcw.listviewdemo.view;
 
+import com.zcw.listviewdemo.util.Constant;
+
 /**
  * Created by 朱城委 on 2018/11/9.<br><br>
  * 滑动菜单属性类
@@ -14,11 +16,13 @@ public class SlideMenuItem {
     private int menuWidth;
 
     public SlideMenuItem() {
+        menuWidth = Constant.SLIDE_MENU_WIDTH;
     }
 
     public SlideMenuItem(String content, int bgColorResId) {
         this.content = content;
         this.bgColorResId = bgColorResId;
+        menuWidth = Constant.SLIDE_MENU_WIDTH;
     }
 
     public String getContent() {
