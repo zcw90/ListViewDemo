@@ -106,11 +106,11 @@ public class SlideDeleteListView extends ListView {
                     return super.dispatchTouchEvent(ev);
                 }
 
-                // 获取点击的view
+                // 滑动之前，如果上一个item菜单还没有完全消失，则快速让其消失。
                 if(slideViewItem != null && slideViewItem.getScrollX() != 0) {
                     slideViewItem.scrollTo(0, 0);
                 }
-                slideViewItem = getChildAt(slidePosition - getFirstVisiblePosition());
+                slideViewItem = getChildAt(slidePosition - getFirstVisiblePosition());  // 获取点击的view
                 break;
 
             case MotionEvent.ACTION_MOVE:
