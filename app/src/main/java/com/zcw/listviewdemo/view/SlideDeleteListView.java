@@ -14,6 +14,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Scroller;
 
+import com.zcw.base.LogUtil;
 import com.zcw.listviewdemo.util.Constant;
 import com.zcw.listviewdemo.util.DisplayUtil;
 
@@ -112,7 +113,8 @@ public class SlideDeleteListView extends ListView {
             case MotionEvent.ACTION_MOVE:
                 int deltaX = (int) ev.getX() - downX;
                 int deltaY = (int) ev.getY() - downY;
-                if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > touchSlop && slideMenuWidth != 0) {
+                if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > touchSlop && slideMenuWidth != 0
+                        || slideViewItem.getScrollX() != 0) {
                     isSlide = true;
                 }
                 else {
