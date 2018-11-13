@@ -1,6 +1,7 @@
 package com.zcw.listviewdemo.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -9,6 +10,9 @@ import android.widget.TextView;
 
 import com.zcw.listviewdemo.R;
 import com.zcw.listviewdemo.util.DisplayUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 朱城委 on 2018/11/12.<br><br>
@@ -19,9 +23,15 @@ public class SlideLayout extends ConstraintLayout {
     /** 显示内容的View */
     private View contentView;
 
-    private SlideMenuItem slideMenuItem;
+    private List<SlideMenuItem> slideMenuItems;
 
-    private TextView slideMenuView;
+    private List<TextView> slideMenuViews;
+
+//    private SlideMenuItem slideMenuItem;
+
+//    private TextView slideMenuView;
+
+    private int[] slideMenuIds;
 
     public SlideLayout(Context context) {
         super(context);
@@ -43,33 +53,87 @@ public class SlideLayout extends ConstraintLayout {
         this.contentView = contentView;
     }
 
-    public SlideMenuItem getSlideMenuItem() {
-        return slideMenuItem;
+    public List<SlideMenuItem> getSlideMenuItems() {
+        return slideMenuItems;
     }
 
-    public void setSlideMenuItem(SlideMenuItem slideMenuItem) {
-        this.slideMenuItem = slideMenuItem;
+    public void setSlideMenuItems(List<SlideMenuItem> menuItems) {
+        if(menuItems == null) {
+            return ;
+        }
 
-        slideMenuView = new TextView(getContext());
-        slideMenuView.setText(slideMenuItem.getContent());
-        slideMenuView.setTextColor(getContext().getResources().getColor(R.color.white));
-        slideMenuView.setBackgroundResource(slideMenuItem.getBgColorResId());
-        slideMenuView.setGravity(Gravity.CENTER);
+        TypedArray typedArray = getContext().getResources().obtainTypedArray(R.array.slide_menu_ids);
+        int[] menuViewIds = new int[typedArray.length()];
+        for(int i = 0; i < typedArray.length(); i++) {
+            menuViewIds[i] = typedArray.getResourceId(i, i);
+        }
 
-        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
-                DisplayUtil.dip2px(getContext(), 60), 0);
-        params.leftToRight = ConstraintLayout.LayoutParams.PARENT_ID;
-        params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
-        params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
-        slideMenuView.setLayoutParams(params);
-        addView(slideMenuView);
+        slideMenuItems = menuItems;
+        slideMenuViews = new ArrayList<>();
+        for(int i = 0; i < slideMenuItems.size() && i < 3; i++) {
+            SlideMenuItem menuItem = slideMenuItems.get(i);
+
+            TextView menuView = new TextView(getContext());
+            menuView.setId(menuViewIds[i]);
+            menuView.setText(menuItem.getContent());
+            menuView.setTextColor(getContext().getResources().getColor(R.color.white));
+            menuView.setBackgroundResource(menuItem.getBgColorResId());
+            menuView.setGravity(Gravity.CENTER);
+
+            ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(menuItem.getMenuWidth(), 0);
+            if(i == 0) {
+                params.leftToRight = ConstraintLayout.LayoutParams.PARENT_ID;
+            }
+            else {
+                params.leftToRight = slideMenuViews.get(i - 1).getId();
+            }
+            params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+            params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
+            menuView.setLayoutParams(params);
+            addView(menuView);
+
+            slideMenuViews.add(menuView);
+        }
     }
 
-    public TextView getSlideMenuView() {
-        return slideMenuView;
+    public List<TextView> getSlideMenuViews() {
+        if(slideMenuViews == null) {
+            return new ArrayList<>();
+        }
+        return slideMenuViews;
     }
 
-    public void setSlideMenuView(TextView slideMenuView) {
-        this.slideMenuView = slideMenuView;
+    public void setSlideMenuViews(List<TextView> slideMenuViews) {
+        this.slideMenuViews = slideMenuViews;
     }
+
+//    public SlideMenuItem getSlideMenuItem() {
+//        return slideMenuItem;
+//    }
+//
+//    public void setSlideMenuItem(SlideMenuItem slideMenuItem) {
+//        this.slideMenuItem = slideMenuItem;
+//
+//        slideMenuView = new TextView(getContext());
+//        slideMenuView.setText(slideMenuItem.getContent());
+//        slideMenuView.setTextColor(getContext().getResources().getColor(R.color.white));
+//        slideMenuView.setBackgroundResource(slideMenuItem.getBgColorResId());
+//        slideMenuView.setGravity(Gravity.CENTER);
+//
+//        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
+//                slideMenuItem.getMenuWidth(), 0);
+//        params.leftToRight = ConstraintLayout.LayoutParams.PARENT_ID;
+//        params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+//        params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
+//        slideMenuView.setLayoutParams(params);
+//        addView(slideMenuView);
+//    }
+//
+//    public TextView getSlideMenuView() {
+//        return slideMenuView;
+//    }
+//
+//    public void setSlideMenuView(TextView slideMenuView) {
+//        this.slideMenuView = slideMenuView;
+//    }
 }
