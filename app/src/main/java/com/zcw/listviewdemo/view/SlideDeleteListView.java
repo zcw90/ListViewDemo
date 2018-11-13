@@ -112,7 +112,7 @@ public class SlideDeleteListView extends ListView {
             case MotionEvent.ACTION_MOVE:
                 int deltaX = (int) ev.getX() - downX;
                 int deltaY = (int) ev.getY() - downY;
-                if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > touchSlop) {
+                if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > touchSlop && slideMenuWidth != 0) {
                     isSlide = true;
                 }
                 else {
@@ -158,31 +158,25 @@ public class SlideDeleteListView extends ListView {
 
                     // 根据滑动速度和侧滑菜单显示的宽度，判断是打开还是关闭侧滑菜单
                     if (velocityX > VELOCITY) {
-//                        smoothOpenSlideMenu();
                         smoothCloseSlideMenu();
                     }
                     else if(velocityX >= 0 && velocityX <= VELOCITY) {
                         if(Math.abs(slideViewItem.getScrollX()) >= Math.abs(slideMenuWidth / 2)) {
-//                            smoothOpenSlideMenu();
-                            smoothCloseSlideMenu();
+                            smoothOpenSlideMenu();
                         }
                         else {
-//                            smoothCloseSlideMenu();
-                            smoothOpenSlideMenu();
+                            smoothCloseSlideMenu();
                         }
                     }
                     else if(velocityX < 0 && velocityX >= -VELOCITY) {
                         if(Math.abs(slideViewItem.getScrollX()) <= Math.abs(slideMenuWidth  * 2 / 3)) {
-//                            smoothCloseSlideMenu();
                             smoothOpenSlideMenu();
                         }
                         else {
-//                            smoothOpenSlideMenu();
                             smoothCloseSlideMenu();
                         }
                     }
                     else if (velocityX < -VELOCITY) {
-//                        smoothCloseSlideMenu();
                         smoothOpenSlideMenu();
                     }
 
@@ -358,7 +352,7 @@ public class SlideDeleteListView extends ListView {
      * @param slideMenuWidth
      */
     public void setSlideMenuWidth(int slideMenuWidth) {
-        if(slideMenuWidth < Constant.SLIDE_MENU_WIDTH) {
+        if(slideMenuWidth < Constant.SLIDE_MENU_WIDTH && slideMenuWidth != 0) {
             slideMenuWidth = Constant.SLIDE_MENU_WIDTH;
         }
         else if(slideMenuWidth > Constant.SLIDE_MENU_WIDTH_MAX) {
@@ -378,7 +372,12 @@ public class SlideDeleteListView extends ListView {
                 slideMenuItems.get(i).setMenuWidth(Math.abs(slideMenuWidth));
             }
 
-            slideMenuWidth = slideMenuWidth * slideMenuItems.size();
+            if(slideMenuItems.size() <= 3) {
+                slideMenuWidth = slideMenuWidth * slideMenuItems.size();
+            }
+            else {
+                slideMenuWidth = slideMenuWidth * 3;
+            }
         }
     }
 
