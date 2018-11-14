@@ -68,6 +68,7 @@ public class SlideLayout extends ConstraintLayout {
             menuViewIds[i] = typedArray.getResourceId(i, i);
         }
 
+        // 设置侧滑菜单
         slideMenuItems = menuItems;
         slideMenuViews = new ArrayList<>();
         for(int i = 0; i < slideMenuItems.size() && i < 3; i++) {
