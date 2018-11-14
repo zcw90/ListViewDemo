@@ -82,7 +82,6 @@ public class SlideDeleteListView extends ListView {
         touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         scroller = new Scroller(context);
         velocityTracker = VelocityTracker.obtain();
-        slideMenuWidth = DisplayUtil.dip2px(getContext(), Constant.SLIDE_MENU_WIDTH);
         slidePosition = AdapterView.INVALID_POSITION;
         slidePositionOpen = slidePosition;
         slideViewItemOpen = null;
@@ -373,6 +372,8 @@ public class SlideDeleteListView extends ListView {
      */
     private void setSlideMenuWidth() {
         if(slideMenuItems != null && slideMenuItems.size() > 0) {
+            slideMenuWidth = DisplayUtil.dip2px(getContext(), Constant.SLIDE_MENU_WIDTH);
+
             for(int i = 0; i < slideMenuItems.size(); i++) {
                 slideMenuItems.get(i).setMenuWidth(Math.abs(slideMenuWidth));
             }
