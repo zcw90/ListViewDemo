@@ -27,12 +27,6 @@ public class SlideLayout extends ConstraintLayout {
 
     private List<TextView> slideMenuViews;
 
-//    private SlideMenuItem slideMenuItem;
-
-//    private TextView slideMenuView;
-
-    private int[] slideMenuIds;
-
     public SlideLayout(Context context) {
         super(context);
     }
@@ -107,34 +101,4 @@ public class SlideLayout extends ConstraintLayout {
     public void setSlideMenuViews(List<TextView> slideMenuViews) {
         this.slideMenuViews = slideMenuViews;
     }
-
-//    public SlideMenuItem getSlideMenuItem() {
-//        return slideMenuItem;
-//    }
-//
-//    public void setSlideMenuItem(SlideMenuItem slideMenuItem) {
-//        this.slideMenuItem = slideMenuItem;
-//
-//        slideMenuView = new TextView(getContext());
-//        slideMenuView.setText(slideMenuItem.getContent());
-//        slideMenuView.setTextColor(getContext().getResources().getColor(R.color.white));
-//        slideMenuView.setBackgroundResource(slideMenuItem.getBgColorResId());
-//        slideMenuView.setGravity(Gravity.CENTER);
-//
-//        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
-//                slideMenuItem.getMenuWidth(), 0);
-//        params.leftToRight = ConstraintLayout.LayoutParams.PARENT_ID;
-//        params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
-//        params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
-//        slideMenuView.setLayoutParams(params);
-//        addView(slideMenuView);
-//    }
-//
-//    public TextView getSlideMenuView() {
-//        return slideMenuView;
-//    }
-//
-//    public void setSlideMenuView(TextView slideMenuView) {
-//        this.slideMenuView = slideMenuView;
-//    }
 }
