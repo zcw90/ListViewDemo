@@ -16,9 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -102,13 +100,14 @@ public class MultiList3Activity extends AppCompatActivity {
                             }
                         }
 
-                        listView.clearChoices();
-                        data.removeAll(deleteData);
-
                         // 退出多选
                         for(int i = 0; i < adapter.getCount(); i++) {
                             listView.setItemChecked(i, false);
                         }
+
+                        listView.clearChoices();
+                        data.removeAll(deleteData);
+                        adapter.notifyDataSetChanged();
                     }
                 });
                 dialog.withButton2("取消", new View.OnClickListener() {
