@@ -55,6 +55,14 @@ public class NormalListActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        // 添加Header、Footer
+        View viewHeader = getLayoutInflater().inflate(R.layout.header_footer, null);
+        View viewFooter = getLayoutInflater().inflate(R.layout.header_footer, null);
+        ((TextView)viewHeader).setText("这是Header");
+        ((TextView)viewFooter).setText("这是Footer");
+        listView.addHeaderView(viewHeader);
+        listView.addFooterView(viewFooter);
     }
 
     private static class NormalAdapter extends BaseAdapter {
